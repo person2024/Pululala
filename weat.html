@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weather Background</title>
+<style>
+    body {
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Arial, sans-serif;
+    }
+    .weather-info {
+        background: rgba(255, 255, 255, 0.5);
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .clear {
+        background-image: url('./images/clear.jpg');
+    }
+    .clouds {
+        background-image: url('./images/cloudy.png');
+    }
+    .rain {
+        background-image: url('./images/rain.png');
+    }
+    .thunderstorm {
+        background-image: url('./images/Thunderstorm.jpg');
+    }
+    .snow {
+        background-image: url('./images/snow.png');
+    }
+</style>
+</head>
+<body>
+    <div class="weather-info">
+        <h2>현재 날씨</h2>
+        <p id="date"></p>
+        <div>
+            <label for="city">도시 선택:</label>
+            <select id="city" onchange="updateWeather()">
+                <option value="Seoul">서울</option>
+                <option value="Busan">부산</option>
+                <option value="Incheon">인천</option>
+                <option value="Jeju">제주</option>
+                <option value="Gangneung">강릉</option>
+                <option value="Daejeon">대전</option>
+                <option value="Gwangju">광주</option>
+                <option value="Daegu">대구</option>
+                <option value="Ulsan">울산</option>
+                <option value="Suwon">수원</option>
+            </select>
+        </div>
+        <div id="weather"></div>
+    </div>
+
+<script>
+    // OpenWeatherMap API 키
+    const apiKey = '15e8ff88f9e51a4c71105ae4f49f5a56';
+
+    // 선택된 도시에 따라 날씨 정보를 가져와서 표시하는 함수
+    async function updateWeather() {
+        const selectedCity = document.getElementById('city').value;
+        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${selectedCity}&appid=${apiKey}&lang=kr`;
+        try {
+            const response = await fetch(apiUrl);
+            const data = await response.json();
+            const weather = translateWeather(data.weather[0].main);
+            const weatherDescription = data.weather[0].description;
+            const temperature = Math.round(data.main.temp - 273.15); // 켈빈을 섭씨로 변환
+            const weatherElement = document.getElementById('weather');
+            weatherElement.innerHTML = `<p>날씨: ${weather} (${weatherDescription})</p><p>온도: ${temperature}°C</p>`;
+            setBackground(weather);
+        } catch (error) {
+            console.error('날씨 정보를 가져오는 중 오류가 발생했습니다.', error);
+        }
+    }
+
+    // 페이지 배경을 설정하는 함수
+    function setBackground(weather) {
+        const body = document.body;
+        switch (weather) {
+            case '맑음':
+                body.style.backgroundImage = "url('./images/clear.jpg')";
+                break;
+            case '구름':
+                body.style.backgroundImage = "url('./images/cloudy.png')";
+                break;
+            case '비':
+                body.style.backgroundImage = "url('./images/rain.png')";
+                break;
+            case '천둥번개':
+                body.style.backgroundImage = "url('./images/Thunderstorm.jpg')";
+                break;
+            case '눈':
+                body.style.backgroundImage = "url('./images/snow.png')";
+                break;
+        }
+    }
+
+    // 영어로 된 날씨 상태를 한글로 변환하는 함수
+    function translateWeather(weather) {
+        switch (weather) {
+            case 'Clear':
+                return '맑음';
+            case 'Clouds':
+                return '구름';
+            case 'Rain':
+                return '비';
+            case 'Thunderstorm':
+                return '천둥번개';
+            case 'Snow':
+                return '눈';
+        }
+    }
+
+    // 날짜 가져오는 함수
+    function displayDate() {
+        const currentDate = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const formattedDate = currentDate.toLocaleDateString('ko-KR', options);
+        document.getElementById('date').innerText = formattedDate;
+    }
+
+    displayDate();
+</script>
+</body>
+</html>

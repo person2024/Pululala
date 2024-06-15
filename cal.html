@@ -1,0 +1,28 @@
+<head>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
+</head>
+<body>
+<div class="calendar">
+  <div class="header">
+    <button id="prevBtn">&lt;</button>
+    <h2 id="monthYear"></h2>
+    <button id="nextBtn">&gt;</button>
+  </div>
+  <div class="days"></div>
+  <div class="event-form">
+    <h3>일정추가</h3>
+    <form id="eventForm">
+      <label for="eventName">일정명</label>
+      <input type="text" id="eventName" required>
+      <label for="eventStartDate">시작일:</label>
+      <input type="date" id="eventStartDate" required>
+      <label for="eventEndDate">종료일:</label>
+      <input type="date" id="eventEndDate" required>
+      <label for="eventColor">표시색상:</label>
+      <input type="color" id="eventColor" value="#7bed9f" required>
+      <button type="submit">확인</button>
+    </form>
+  </div>
+</div>
+</body>

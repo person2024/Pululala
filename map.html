@@ -1,13 +1,30 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vegetable Garden Planner</title>
-    <link rel="stylesheet" href="map.css">
-    <script src="map.js">
-    </script>
+    <link rel="stylesheet" href="map.css"> <!-- 여기서 map.css 파일을 연결 -->
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(30px, 1fr));
+            grid-gap: 1px;
+            background-color: #ddd;
+            margin-top: 20px;
+        }
+
+        .grid-item {
+            background-color: #fff;
+            border: 1px solid #999;
+            padding: 0;
+            text-align: center;
+            font-size: 12px;
+            /* Ensure each cell is a square */
+            width: calc(100% / var(--width));
+            height: calc(100% / var(--width));
+        }
+    </style>
 </head>
 <body>
     <h1>Vegetable Garden Planner</h1>
@@ -18,6 +35,12 @@
         <input type="number" id="height" name="height" required min="1">
         <button type="submit">Generate Garden</button>
     </form>
+    <div id="gardenGrid" class="grid-container"></div>
+
+    <script src="map.js"></script> <!-- 여기서 map.js 파일을 연결 -->
+</body>
+</html>
+
     <div id="gardenGrid" class="grid-container"></div>
 
     

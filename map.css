@@ -1,9 +1,12 @@
+/* 이 파일은 map.css 입니다. */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(30px, 1fr));
     grid-gap: 1px;
     background-color: #ddd;
     margin-top: 20px;
+    /* Specify the number of columns and rows */
+    grid-template-columns: repeat(var(--width), 1fr);
+    grid-template-rows: repeat(var(--height), 1fr);
 }
 
 .grid-item {
@@ -12,7 +15,4 @@
     padding: 0;
     text-align: center;
     font-size: 12px;
-    /* Ensure each cell is a square */
-    width: calc(100% / var(--width));
-    height: calc(100% / var(--width));
 }

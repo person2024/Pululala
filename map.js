@@ -26,10 +26,13 @@ function generateGrid(width, height) {
         
         for (let j = 0; j < width; j++) {
             let cell = document.createElement('div');
-            cell.classList.add('cell');
+            cell.classList.add('bed-cell');
             row.appendChild(cell);
         }
         
         gardenBed.appendChild(row);
     }
+    
+    gardenBed.style.display = 'grid'; // Show the grid after generating it
 }
+

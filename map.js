@@ -1,5 +1,3 @@
-// map.js
-
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('updateBed').addEventListener('click', function() {
         let widthInput = document.getElementById('width');
@@ -31,6 +29,11 @@ function generateGrid(width, height) {
         }
         
         gardenBed.appendChild(row);
+    }
+    
+    gardenBed.style.display = 'grid'; // Show the grid after generating it
+}
+
     }
     
     gardenBed.style.display = 'grid'; // Show the grid after generating it

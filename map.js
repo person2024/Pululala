@@ -1,41 +1,45 @@
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('updateBed').addEventListener('click', function() {
-        let widthInput = document.getElementById('width');
-        let heightInput = document.getElementById('height');
-        
-        let width = parseInt(widthInput.value);
-        let height = parseInt(heightInput.value);
-        
-        if (!isNaN(width) && !isNaN(height) && width >= 1 && width <= 10 && height >= 1 && height <= 10) {
-            generateGrid(width, height);
-        } else {
-            alert('Please enter valid width and height (1-10).');
-        }
-    });
+document.addEventListener('DOMContentLoaded', () => {
+  const crops = document.querySelectorAll('.crops img');
+  const updateBedButton = document.getElementById('updateBed');
+  const gardenBed = document.getElementById('gardenBed');
+
+  function createGardenBed(width, height) {
+      gardenBed.innerHTML = '';
+      gardenBed.style.gridTemplateColumns = `repeat(${width}, 1fr)`;
+      for (let i = 0; i < width * height; i++) {
+          const cell = document.createElement('div');
+          cell.classList.add('bed-cell');
+          cell.addEventListener('dragover', dragOver);
+          cell.addEventListener('drop', drop);
+          gardenBed.appendChild(cell);
+      }
+  }
+
+  function dragStart(e) {
+      e.dataTransfer.setData('text/plain', e.target.src);
+  }
+
+  function dragOver(e) {
+      e.preventDefault();
+  }
+
+  function drop(e) {
+      e.preventDefault();
+      const src = e.dataTransfer.getData('text/plain');
+      e.target.innerHTML = `<img src="${src}" alt="Crop" style="max-width: 100%; max-height: 100%;">`;
+  }
+
+  crops.forEach(crop => {
+      crop.draggable = true;
+      crop.addEventListener('dragstart', dragStart);
+  });
+
+  updateBedButton.addEventListener('click', () => {
+      const width = document.getElementById('width').value;
+      const height = document.getElementById('height').value;
+      createGardenBed(width, height);
+  });
+
+  // Initialize with default values
+  createGardenBed(5, 1);
 });
-
-function generateGrid(width, height) {
-    let gardenBed = document.getElementById('gardenBed');
-    gardenBed.innerHTML = ''; // Clear previous grid if any
-    
-    for (let i = 0; i < height; i++) {
-        let row = document.createElement('div');
-        row.classList.add('row');
-        
-        for (let j = 0; j < width; j++) {
-            let cell = document.createElement('div');
-            cell.classList.add('bed-cell');
-            row.appendChild(cell);
-        }
-        
-        gardenBed.appendChild(row);
-    }
-    
-    gardenBed.style.display = 'grid'; // Show the grid after generating it
-}
-
-    }
-    
-    gardenBed.style.display = 'grid'; // Show the grid after generating it
-}
-
